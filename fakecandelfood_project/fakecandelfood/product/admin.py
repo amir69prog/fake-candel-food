@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Product, Tag, Category
+from .models import Product, ProductComment, Tag, Category
 
 
 @admin.register(Product)
@@ -18,3 +18,8 @@ class ProductAdmin(admin.ModelAdmin):
 class TagCategoryAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug')
     
+
+@admin.register(ProductComment)
+class ProductCommentAdmin(admin.ModelAdmin):
+    list_display = ['product', 'name', 'email', 'website_url']
+    search_fields = ('product', 'name', 'email', 'content', 'website_url')

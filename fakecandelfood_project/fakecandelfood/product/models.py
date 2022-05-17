@@ -68,3 +68,19 @@ class Tag(SlugableModel, models.Model):
 
     def __str__(self) -> str:
         return self.title
+    
+
+class ProductComment(models.Model):
+    content = models.TextField(_('Content'))
+    name = models.CharField(_('Name'), max_length=128)
+    email = models.EmailField(_('Email'), max_length=256)
+    website_url = models.URLField(_('Website URL'), blank=True, null=True)
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name='product_comments',
+        verbose_name=_('Product')
+    )
+
+    def __str__(self) -> str:
+        return self.name
