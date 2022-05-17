@@ -131,3 +131,12 @@ dmypy.json
 
 # Custom file Stuff
 Todo
+
+# Media Stuff
+media
+*.jpg
+*.png
+*.jpeg
+*.gif
+*.bmp
+*.tiff
