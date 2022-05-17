@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Product, ProductComment, Tag, Category
+from .models import FavoriteProductList, Product, ProductComment, Tag, Category
 
 
 @admin.register(Product)
@@ -23,3 +23,9 @@ class TagCategoryAdmin(admin.ModelAdmin):
 class ProductCommentAdmin(admin.ModelAdmin):
     list_display = ['product', 'name', 'email', 'website_url']
     search_fields = ('product', 'name', 'email', 'content', 'website_url')
+
+
+@admin.register(FavoriteProductList)
+class FavoriteProductListAdmin(admin.ModelAdmin):
+    list_display = ['ip_address', 'count_list']
+    search_fields = ('ip_address',)

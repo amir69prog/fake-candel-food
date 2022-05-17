@@ -84,3 +84,16 @@ class ProductComment(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+
+class FavoriteProductList(models.Model):
+    ip_address = models.GenericIPAddressField(_('IP'), unique=True,)
+    products = models.ManyToManyField(Product, related_name='favorites', blank=True)
+
+    def __str__(self) -> str:
+        return self.ip_address
+    
+    @property
+    def count_list(self) -> int:
+        """ Return count of the products list """
+        return self.products.count()
