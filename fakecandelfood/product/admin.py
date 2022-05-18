@@ -9,10 +9,6 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ['title', 'description', 'uuid']
     list_filter = ('category', 'is_active', 'is_take_away')
 
-    def comma_price(self, instance: Product) -> str:
-        return instance.comma_price(instance.price_as_toman)
-    comma_price.short_description = 'price'
-
 
 @admin.register(Tag, Category)
 class TagCategoryAdmin(admin.ModelAdmin):

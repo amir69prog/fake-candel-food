@@ -1,10 +1,9 @@
-from typing import Union
 import uuid
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.humanize.templatetags.humanize import intcomma
-
+from django.utils.text import slugify
 
 from config.models import SlugableModel, TimeStampedModel
 
@@ -43,14 +42,24 @@ class Product(SlugableModel, TimeStampedModel, models.Model):
     def __str__(self) -> str:
         return self.slug
 
+    def save(self, *args, **kwargs):
+        # set slug as slugify text
+        self.slug = slugify(self.title, allow_unicode=True)
+        super().save(*args, **kwargs)
+
     @property
     def price_as_toman(self):
         """ Price as toman """
         return int(self.price)
     
-    def comma_price(self, price: Union[int, float]) -> str:
+    @property
+    def comma_price(self) -> str:
         """ Comma the price """
-        return intcomma(price)
+        return intcomma(self.price_as_toman)
+
+    def can_take_away(self) -> bool:
+        """ Can product take away """
+        return self.is_take_away
 
 
 class Category(SlugableModel, models.Model):
@@ -62,12 +71,22 @@ class Category(SlugableModel, models.Model):
     def __str__(self) -> str:
         return self.title
 
+    def save(self, *args, **kwargs):
+        # set slug as slugify text
+        self.slug = slugify(self.title, allow_unicode=True)
+        super().save(*args, **kwargs)
+
 
 class Tag(SlugableModel, models.Model):
     title = models.CharField(_('Title'), max_length=128)
 
     def __str__(self) -> str:
         return self.title
+    
+    def save(self, *args, **kwargs):
+        # set slug as slugify text
+        self.slug = slugify(self.title, allow_unicode=True)
+        super().save(*args, **kwargs)
     
 
 class ProductComment(models.Model):

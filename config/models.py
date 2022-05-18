@@ -16,7 +16,7 @@ class TimeStampedModel(models.Model):
 class SlugableModel(models.Model):
     """ an abstract model to provide slug field """
 
-    slug = models.SlugField(_('Slug'), allow_unicode=True)
+    slug = models.SlugField(_('Slug'), allow_unicode=True, blank=True)
     
     class Meta:
         abstract = True
